@@ -163,7 +163,9 @@ func (d *Diff) diff(aVal, bVal reflect.Value, path Path) bool {
 		if reflect.DeepEqual(aVal.Interface(), bVal.Interface()) {
 			equal = true
 		} else {
-			d.Modified[&path] = bVal.Interface()
+			localPath := make(Path, len(path))
+			copy(localPath, path)
+			d.Modified[&localPath] = bVal.Interface()
 			equal = false
 		}
 	}
